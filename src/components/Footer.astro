@@ -1,0 +1,114 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="touch" id="contact">
+  <div class="touch-card">
+    <div class="touch-main">
+      <div class="touch-title">
+        <svg viewBox="0 0 256 256" aria-hidden="true">
+          <path
+            d="M220.24,132.24l-72,72a6,6,0,0,1-8.48-8.48L201.51,134H40a6,6,0,0,1,0-12H201.51L139.76,60.24a6,6,0,0,1,8.48-8.48l72,72A6,6,0,0,1,220.24,132.24Z"
+          ></path>
+        </svg>
+        <h2>Get in Touch</h2>
+      </div>
+      <div class="touch-links">
+        <div>
+          <p class="label">Email</p>
+          <p><a href="mailto:ibraheemfrq@gmail.com">ibraheemfrq@gmail.com</a></p>
+        </div>
+        <div>
+          <p class="label">Channels</p>
+          <p>
+            <a href="https://www.linkedin.com/in/ibraheem-farooq-60818b248/" target="_blank" rel="noopener"
+              >LinkedIn</a
+            >
+          </p>
+          <p>
+            <a href="https://www.instagram.com/ibraheemfarooq/" target="_blank" rel="noopener">Instagram</a>
+          </p>
+        </div>
+      </div>
+      <p class="legal">© {year} Ibraheem Farooq</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .touch {
+    width: 100%;
+    max-width: var(--page-max);
+    padding: var(--pad-hero);
+  }
+
+  .touch-card {
+    border-radius: var(--radius-card);
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  .touch-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    padding: 48px 16px 16px;
+  }
+
+  .touch-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .touch-title svg {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    fill: var(--color-white);
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--type-h2-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-tight);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .touch-links {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--type-copy-compact);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-flat);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .label,
+  .legal {
+    color: var(--color-muted);
+  }
+
+  .legal {
+    font-size: var(--type-meta-size);
+    line-height: var(--leading-meta);
+    letter-spacing: var(--tracking-button);
+  }
+
+  a:hover,
+  a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

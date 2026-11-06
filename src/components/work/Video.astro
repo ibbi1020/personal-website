@@ -1,0 +1,21 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+}
+
+const { src, poster } = Astro.props;
+---
+
+<video src={src} poster={poster} controls playsinline></video>
+
+<style>
+  video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-card);
+    background: var(--color-ink);
+  }
+</style>

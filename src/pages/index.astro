@@ -1,0 +1,354 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import WorkCard from "../components/WorkCard.astro";
+import ProjectCursor from "../components/ProjectCursor.astro";
+import portrait from "../assets/works/portrait.png";
+import { getWorks } from "../lib/works";
+
+const words = ["Product", "UI/UX", "Branding"];
+const works = (await getWorks()).filter((work) => work.data.featured);
+
+const services = [
+  "Branding Design",
+  "Landing Page Design",
+  "Mobile App Design",
+  "UI/UX Design",
+  "Website Development",
+];
+---
+
+<Base>
+  <main>
+    <section class="hero">
+      <div class="hero-frame">
+        <Nav />
+        <div class="ticker">
+          {
+            words.map((word, index) => (
+              <>
+                <h1 class="rise-word" style={`--delay: var(--delay-word-${index + 1})`}>
+                  {word}
+                </h1>
+                {index < words.length - 1 && <span class="dot fade-dot">•</span>}
+              </>
+            ))
+          }
+        </div>
+        <h1 class="name">
+          <span class="rise-name line">Ibraheem</span>
+          <span class="rise-name line">
+            <span class="accent">Farooq</span>.
+          </span>
+        </h1>
+      </div>
+    </section>
+
+    <section class="works" aria-label="Selected works">
+      <div class="grid">
+        {works.map((work) => (
+          <WorkCard
+            href={`/works/${work.id}`}
+            title={work.data.title}
+            image={work.data.cover}
+            span={work.data.span ?? 240}
+          />
+        ))}
+      </div>
+      <a class="all" href="/works">
+        <span>See all Works</span>
+        <svg viewBox="0 0 256 256" aria-hidden="true">
+          <path
+            d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"
+          ></path>
+        </svg>
+      </a>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-copy">
+        <div class="details">
+          <div class="block">
+            <h2>About me</h2>
+            <p>
+              I'm a Computer Science major based in Islamabad who transitioned from designing
+              posters and brand identities to UX and product design. My technical background
+              provides a unique perspective on bridging digital experiences that balance user
+              needs with technical viability.
+            </p>
+            <p>
+              I'm passionate about solving real problems through thoughtful design and clean,
+              intuitive interfaces. I believe great design emerges from understanding both user
+              behavior and the technical constraints that shape digital products.
+            </p>
+          </div>
+          <div class="block">
+            <h2>Services</h2>
+            <ul class="chips">
+              {services.map((service) => <li>{service}</li>)}
+            </ul>
+          </div>
+          <div class="block">
+            <h2>Experience</h2>
+            <div class="roles">
+              <p class="role">Present: Principle Designer</p>
+              <p class="role">
+                <a href="https://antematter.io" target="_blank" rel="noopener">@Antematter</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="portrait">
+        <img src={portrait.src} width={portrait.width} height={portrait.height} alt="" />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <ProjectCursor />
+</Base>
+
+<style>
+  .hero {
+    display: flex;
+    height: 100vh;
+    padding: var(--pad-hero);
+  }
+
+  .hero-frame {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-ink);
+    color: var(--color-canvas);
+  }
+
+  .ticker {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-ticker);
+    width: 100%;
+    padding: var(--pad-ticker);
+  }
+
+  .ticker h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--type-ticker-size);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-tight);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .dot {
+    font-size: var(--type-ticker-dot-size);
+    color: var(--color-white);
+  }
+
+  .name {
+    width: 100%;
+    margin: 0;
+    padding: var(--pad-name);
+    font-family: var(--font-display);
+    font-size: var(--type-name-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-name);
+    letter-spacing: var(--tracking-name);
+    text-align: right;
+    font-feature-settings: var(--font-feature);
+  }
+
+  .line {
+    display: block;
+  }
+
+  .accent {
+    color: var(--color-name-accent);
+  }
+
+  .works {
+    position: relative;
+    padding: 0 var(--pad-hero);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(50px, 1fr));
+    gap: var(--pad-hero);
+  }
+
+  .all {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border-radius: var(--radius-button);
+    background: var(--color-button);
+    color: var(--color-black);
+    font-family: var(--font-display);
+    font-size: var(--type-copy-compact);
+    font-weight: var(--type-button-weight);
+    line-height: var(--leading-button);
+    letter-spacing: var(--tracking-button);
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .all svg {
+    position: absolute;
+    right: -23px;
+    bottom: 14px;
+    width: 22px;
+    height: 19px;
+    fill: var(--color-button);
+  }
+
+  .about {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0 0;
+  }
+
+  .about-copy {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+    padding: 48px 16px;
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 720px;
+  }
+
+  .about h2 {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--type-h2-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-tight);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .about p,
+  .chip,
+  .chips li {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--type-copy-compact);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-flat);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 720px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chips li {
+    padding: 8px 16px;
+    border-radius: var(--radius-chip);
+    background: var(--color-chip-soft);
+    backdrop-filter: blur(var(--blur-chip));
+  }
+
+  .roles {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .role {
+    font-size: var(--type-lead-size);
+    letter-spacing: var(--tracking-tight);
+    font-feature-settings: var(--font-feature-body);
+  }
+
+  .role a {
+    text-decoration: underline;
+  }
+
+  .role a:hover,
+  .role a:focus-visible {
+    color: var(--color-muted);
+    text-underline-offset: 3px;
+  }
+
+  .portrait {
+    position: sticky;
+    top: 8px;
+    flex: 1;
+    min-width: 0;
+    aspect-ratio: 0.75;
+    padding: 0 8px;
+  }
+
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    border-radius: var(--radius-card);
+  }
+
+  @media (max-width: 1199.98px) {
+    .ticker {
+      display: none;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .all {
+      top: auto;
+      bottom: 22px;
+      transform: translateX(-50%);
+    }
+
+    .about {
+      flex-direction: column;
+    }
+
+    .portrait {
+      position: relative;
+      top: auto;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 809.98px) {
+    .all {
+      bottom: 24px;
+    }
+  }
+</style>

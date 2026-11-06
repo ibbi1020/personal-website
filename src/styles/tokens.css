@@ -1,0 +1,211 @@
+/*
+  Values copied from the published Framer page.
+  Color tokens are the five custom properties in the page CSS.
+  Other colors are inline styles whose token is not defined, so the fallback paints.
+*/
+
+@font-face {
+  font-family: "Inter Display";
+  src: url("/fonts/inter-display-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter Display";
+  src: url("/fonts/inter-display-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter Display";
+  src: url("/fonts/inter-display-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* --token-94282152-d076-428b-8301-9c96bce5cc5a. Page background and the name. */
+  --color-canvas: #f7f7f7;
+  /* --token-b122d188-d197-4aae-92af-ed029a924ffd */
+  --color-white: #fff;
+  /* --token-038294ff-2554-4757-9e94-0ca2f4ed893f */
+  --color-muted: #999;
+  /* --token-9dfbdc8a-ab75-41aa-bb24-90d80699526b. Body text and the hero fill. */
+  --color-ink: #171614;
+  /* --token-04d44afe-a15d-4179-acc5-3cac99c71e85. BG Fill on the button. */
+  --color-fill: #8f1b00;
+
+  /* Farooq is set as rgb(189, 0, 0). The period stays --color-canvas. */
+  --color-name-accent: rgb(189, 0, 0);
+  /* See all Works text uses an undefined token, so the fallback rgb(0, 0, 0) paints. */
+  --color-black: rgb(0, 0, 0);
+  /* Button content uses an undefined token, so the fallback rgb(255, 255, 255) paints. */
+  --color-button: rgb(255, 255, 255);
+
+  /* Nav container, data-framer-name Container. */
+  --color-nav: rgba(0, 0, 0, 0.4);
+  /* Nav link, data-framer-name Desktop. */
+  --color-nav-link: rgba(0, 0, 0, 0);
+  /* Service chip, data-framer-name Small. */
+  --color-chip: rgba(0, 0, 0, 0.2);
+  --color-chip-soft: rgba(0, 0, 0, 0.05);
+  /* Divider, height 1px. */
+  --color-line: #0000001a;
+
+  /* Form fields. The form is not built; these are the published field colors. */
+  --color-input: rgba(187, 187, 187, 0.15);
+  --color-input-border: rgba(136, 136, 136, 0.1);
+  --color-input-focus: #8888884d;
+  --color-submit: rgb(51, 51, 51);
+
+  /* Published font stacks. Bold is the preset's --framer-font-family-bold. */
+  --font-display: "Inter Display", "Inter Display Placeholder", sans-serif;
+  --font-bold: "Manrope", "Manrope Placeholder", sans-serif;
+  --font-feature: "ss07" on;
+  --font-feature-body: "blwf" on, "ss07" on;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  --tracking-name: -0.04em;
+  --tracking-break: -0.06em;
+  --tracking-tight: -0.04em;
+  --tracking-button: -0.02em;
+  --tracking-flat: 0em;
+
+  --leading-name: 0.9em;
+  --leading-name-mobile: 0.8em;
+  --leading-display: 0.9em;
+  --leading-title: 1.1em;
+  --leading-title-mobile: 0.8em;
+  --leading-body: 1.4em;
+  --leading-button: 1.2em;
+  --leading-meta: 1em;
+
+  /* Breakpoints from the appear script. */
+  --bp-desktop: 1200px;
+  --bp-tablet-min: 810px;
+  --bp-tablet-max: 1199.98px;
+  --bp-mobile: 809.98px;
+
+  /* Hero ticker. Desktop only. Weight 300, preset on the h1. */
+  --type-ticker-size: 36px;
+  --type-ticker-dot-size: 24px;
+
+  /* Name spans. Desktop and tablet. Mobile h1 is 64px. */
+  --type-name-size: 289.3145180022px;
+  /* Fit-text h1 size under the spans on desktop and tablet. The spans override it. */
+  --type-name-fit: 176.61611659987454px;
+  /* Line-break span, every breakpoint. It contains only a br. */
+  --type-name-break: 289.3145180022px;
+
+  /* Text presets. Desktop size, then the breakpoint override when it differs. */
+  --type-h2-size: 40px;
+  --type-h2-mobile: 32px;
+  --type-h3-size: 32px;
+  --type-h3-mobile: 28px;
+  --type-project-size: 96px;
+  --type-project-tablet: 56px;
+  --type-project-mobile: 64px;
+  --type-lead-size: 24px;
+  --type-lead-mobile: 20px;
+  --type-copy-size: 18px;
+  --type-copy-compact: 16px;
+  --type-nav-size: 14px;
+  --type-note-size: 28px;
+  --type-note-mobile: 24px;
+  --type-small-size: 18px;
+
+  /* Button label. Size is not set on the element. Weight and tracking are. */
+  --type-button-weight: 500;
+
+  /* Copyright line. */
+  --type-meta-size: 14px;
+
+  /* Input text. */
+  --type-input-size: 16px;
+
+  /* Radii from inline border-radius on named layers. */
+  --radius-link: 4px;
+  --radius-nav: 8px;
+  --radius-input: 8px;
+  --radius-card: 10px;
+  --radius-button: 39px;
+  --radius-chip: 40px;
+  /* 404 “Go to the homepage” button. */
+  --radius-return: 45px;
+  --radius-fill: 100px;
+
+  /* Backdrop blurs. */
+  --blur-overlay: 0px;
+  --blur-letter: 5px;
+  --blur-ticker: 5px;
+  --blur-nav: 8px;
+  --blur-hover: 10px;
+  --blur-chip: 10px;
+
+  /* Featured image filter. */
+  --image-brightness: 0.8;
+
+  /* Hero section padding and the ticker / name insets. */
+  --pad-hero: 8px;
+  --pad-ticker: 80px 24px 0;
+  --gap-ticker: 65px;
+  --pad-name: 0 0 16px 24px;
+  --pad-name-mobile: 0 16px 16px;
+  --pad-nav: 4px;
+  --gap-nav: 4px;
+  --pad-nav-link: 6px 12px;
+
+  /* 404 title column and homepage button, from that page’s layout. */
+  --gap-stack: 40px;
+  --title-max: 700px;
+  --pad-return: 10px 16px;
+  --return-height: 23px;
+  --return-gap: 8px;
+  --return-tilt: 4deg;
+  --noise-size: 200px;
+  --noise-opacity: 0.25;
+
+  /* Nav position: left 50%, top is 0.055 of the viewport, then translate(-50%, -50%). */
+  --nav-top: 0.055;
+  --nav-z: 10;
+  --page-max: 2560px;
+}
+
+@media (max-width: 809.98px) {
+  :root {
+    --type-name-size: 64px;
+    --leading-name: 0.8em;
+    --type-h2-size: 32px;
+    --type-h3-size: 28px;
+    --type-project-size: 64px;
+    --leading-title: 0.8em;
+    --type-lead-size: 20px;
+    --type-copy-size: 16px;
+    --type-note-size: 24px;
+    --pad-name: 0 16px 16px;
+  }
+}
+
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  :root {
+    --type-project-size: 56px;
+    --type-copy-size: 16px;
+  }
+}

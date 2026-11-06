@@ -1,0 +1,65 @@
+---
+import Nav from "./Nav.astro";
+
+interface Props {
+  noise?: boolean;
+}
+
+const { noise = false } = Astro.props;
+---
+
+<main>
+  <section class="frame-page">
+    <div class="frame-fill">
+      {noise && <div class="noise" aria-hidden="true"></div>}
+      <Nav />
+      <div class="frame-content">
+        <slot />
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+  .frame-page {
+    display: flex;
+    height: 100vh;
+    padding: var(--pad-hero);
+  }
+
+  .frame-fill {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .noise {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: url("/noise.png");
+    background-repeat: repeat;
+    background-size: var(--noise-size);
+    opacity: var(--noise-opacity);
+    pointer-events: none;
+  }
+
+  .frame-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-stack);
+    width: min(100%, var(--title-max));
+    padding-inline: 24px;
+    text-align: center;
+  }
+</style>

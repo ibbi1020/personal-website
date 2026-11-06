@@ -1,0 +1,43 @@
+---
+import Base from "../../layouts/Base.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import WorkIndexCard from "../../components/WorkIndexCard.astro";
+import ProjectCursor from "../../components/ProjectCursor.astro";
+import { getWorks } from "../../lib/works";
+
+const works = await getWorks();
+---
+
+<Base title="Works - Ibraheem Farooq" description="Selected product, interface, and brand work.">
+  <Nav />
+  <main>
+    <section class="list" aria-label="Works">
+      {
+        works.map((work) => (
+          <WorkIndexCard
+            href={`/works/${work.id}`}
+            title={work.data.title}
+            image={work.data.cover}
+            services={work.data.services}
+          />
+        ))
+      }
+    </section>
+  </main>
+  <Footer />
+  <ProjectCursor />
+</Base>
+
+<style>
+  main {
+    margin-inline: auto;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 8px 0;
+  }
+</style>

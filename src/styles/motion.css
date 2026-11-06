@@ -1,0 +1,152 @@
+/*
+  Motion from the homepage appear script, the card component, and the ticker prop.
+  Springs are stored as their published fields. No stand-in duration or curve is added.
+*/
+
+:root {
+  --ease-rise: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-linear: linear;
+  --opacity-start: 0.001;
+
+  --duration-rise: 1.4s;
+  --duration-dot: 0.1s;
+
+  --delay-word-1: 0.1s;
+  --delay-word-2: 0.2s;
+  --delay-word-3: 0.3s;
+  --delay-name: 0.4s;
+  --delay-dot: 0.6s;
+
+  --rise-word: 50px;
+  --rise-name: 400px;
+
+  /* Small pills. Appear id plufqg. Same on desktop, tablet, and mobile. */
+  --spring-y: 100px;
+  --spring-delay: 0s;
+  --spring-stiffness: 400;
+  --spring-damping: 50;
+  --spring-mass: 1;
+
+  /* Card component default transition. Published spring, bounce 0, 0.4s. */
+  --hover-type: spring;
+  --hover-duration: 0.4s;
+  --hover-bounce: 0;
+  --hover-delay: 0s;
+  /* Overlay blur uses half of that spring. The published curve is bounce 0. */
+  --hover-overlay-duration: 0.2s;
+  --hover-overlay-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Project cursor follow. stiffness 500, damping 60, mass 1. Opacity tween 0.2s. */
+  --cursor-stiffness: 500;
+  --cursor-damping: 60;
+  --cursor-mass: 1;
+  --cursor-offset-x: 20px;
+  --cursor-offset-y: -20px;
+
+  /* Small component MotionConfig. */
+  --chip-duration: 0.4s;
+  --chip-bounce: 0.2;
+  --chip-delay: 0s;
+
+  /* Letter split, inline on each letter. No duration or stagger is published. */
+  --letter-opacity: 0.001;
+  --letter-blur: 5px;
+  --letter-y: 10px;
+
+  /* 404 letters start further away. Still no published duration. */
+  --letter-404-blur: 10px;
+  --letter-404-y: 20px;
+
+  /* 404 homepage button. Appear id 74bc6l. Spring, bounce 0. */
+  --return-y: 20px;
+  --return-delay: 0.8s;
+  --return-duration: 1.8s;
+  --return-bounce: 0;
+
+  /* Ticker component prop speed: 75. Measured loops move 75px per second. */
+  --ticker-speed: 75;
+
+  /* Title ticker mask. */
+  --ticker-mask: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 12.5%,
+    rgba(0, 0, 0, 1) 87.5%,
+    rgba(0, 0, 0, 0) 100%
+  );
+
+  /* Name fit-text foreignObject. */
+  --name-scale: 0.95;
+}
+
+@keyframes rise {
+  from {
+    opacity: var(--opacity-start);
+    transform: translateY(var(--rise));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: var(--opacity-start);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(var(--marquee-distance) * -1));
+  }
+}
+
+.rise-word,
+.rise-name {
+  animation-name: rise;
+  animation-duration: var(--duration-rise);
+  animation-timing-function: var(--ease-rise);
+  animation-fill-mode: both;
+}
+
+.rise-word {
+  --rise: var(--rise-word);
+  animation-delay: var(--delay, var(--delay-word-1));
+}
+
+.rise-name {
+  --rise: var(--rise-name);
+  animation-delay: var(--delay-name);
+}
+
+.fade-dot {
+  animation: fade-in var(--duration-dot) var(--ease-linear) var(--delay-dot) both;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: calc(var(--marquee-distance) / var(--ticker-speed) * 1s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-word,
+  .rise-name,
+  .fade-dot,
+  .marquee-track {
+    animation: none;
+  }
+}

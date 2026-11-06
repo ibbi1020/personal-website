@@ -1,0 +1,68 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/works", label: "Works" },
+  { href: "/#about", label: "About" },
+];
+
+const contact = { href: "/contact", label: "Contact" };
+const current = Astro.url.pathname;
+---
+
+<div class="nav-slot">
+  <nav class="nav" aria-label="Primary">
+    <div class="group">
+      {
+        links.map((link) => (
+          <a href={link.href} aria-current={current === link.href ? "page" : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+    <div class="group">
+      <a href={contact.href} aria-current={current === contact.href ? "page" : undefined}>
+        {contact.label}
+      </a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .nav-slot {
+    position: fixed;
+    z-index: var(--nav-z);
+    top: calc(min(100%, 100%) * var(--nav-top));
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-nav);
+  }
+
+  .group {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-nav);
+    padding: var(--pad-nav);
+    border-radius: var(--radius-nav);
+    background: var(--color-nav);
+    backdrop-filter: blur(var(--blur-nav));
+  }
+
+  a {
+    padding: var(--pad-nav-link);
+    border-radius: var(--radius-link);
+    background: var(--color-nav-link);
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-size: var(--type-nav-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-tight);
+    font-feature-settings: var(--font-feature);
+  }
+</style>

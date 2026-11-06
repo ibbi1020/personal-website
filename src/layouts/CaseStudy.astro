@@ -1,0 +1,317 @@
+---
+import type { Work } from "../lib/works";
+import Base from "./Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import WorkCard from "../components/WorkCard.astro";
+import ProjectCursor from "../components/ProjectCursor.astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  work: Work;
+  next: Work;
+}
+
+const { work, next } = Astro.props;
+const credit = parseCredit(work.data.credits);
+
+function parseCredit(value: string) {
+  const match = value.match(/^(.*)\[([^\]]+)\]\(([^)]+)\)(.*)$/);
+  if (!match) return { before: value, label: "", href: "", after: "" };
+  return { before: match[1], label: match[2], href: match[3], after: match[4] };
+}
+---
+
+<Base title={`${work.data.title} - Ibraheem Farooq`} description={work.data.summary}>
+  <Nav />
+  <main>
+    <section class="hero">
+      <div class="hero-frame">
+        <Image src={work.data.cover} alt="" widths={[768, 1280, 2048]} sizes="100vw" />
+        <div class="overlay">
+          <h1>{work.data.title}</h1>
+        </div>
+      </div>
+    </section>
+
+    <section class="details">
+      <div class="meta">
+        <div>
+          <p class="field">Client</p>
+          <p>{work.data.client}</p>
+        </div>
+        <div>
+          <p class="field">Year</p>
+          <p>{work.data.year}</p>
+        </div>
+        <div>
+          <p class="field">Services</p>
+          {work.data.services.map((service) => <p>{service}</p>)}
+        </div>
+        <div>
+          <p class="field">Credits</p>
+          <p>
+            {credit.before}
+            {
+              credit.href && (
+                <a href={credit.href} target="_blank" rel="noopener">
+                  {credit.label}
+                </a>
+              )
+            }
+            {credit.after}
+          </p>
+        </div>
+      </div>
+      <div class="copy">
+        <p>{work.data.summary}</p>
+        {
+          work.data.link && (
+            <a class="project" href={work.data.link} target="_blank" rel="noopener">
+              <span class="project-track">
+                <span>{work.data.linkLabel ?? "See project"}</span>
+                <span class="project-tilt" aria-hidden="true">
+                  {work.data.linkLabel ?? "See project"}
+                </span>
+              </span>
+            </a>
+          )
+        }
+      </div>
+    </section>
+
+    <div class="media">
+      <slot />
+    </div>
+
+    <section class="next" aria-label="Next project">
+      <div class="next-label">
+        <h2>Next project</h2>
+      </div>
+      <WorkCard
+        href={`/works/${next.id}`}
+        title={next.data.title}
+        image={next.data.cover}
+        span={next.data.span ?? 240}
+      />
+    </section>
+  </main>
+  <Footer />
+  <ProjectCursor />
+</Base>
+
+<style>
+  main {
+    margin-inline: auto;
+  }
+
+  .hero {
+    height: 100vh;
+    padding: var(--pad-hero);
+  }
+
+  .hero-frame {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+  }
+
+  .hero-frame :global(img) {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    filter: brightness(0.9);
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    -webkit-backdrop-filter: blur(var(--blur-letter));
+    backdrop-filter: blur(var(--blur-letter));
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-size: var(--type-project-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-title);
+    letter-spacing: var(--tracking-tight);
+    text-align: center;
+    text-wrap: balance;
+    font-feature-settings: var(--font-feature);
+  }
+
+  .details {
+    display: flex;
+    align-items: flex-start;
+    padding: 80px 16px;
+    background: var(--color-white);
+  }
+
+  .meta {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 24px;
+    width: 276px;
+  }
+
+  .meta p,
+  .copy p {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--type-copy-compact);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-flat);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .field {
+    color: var(--color-muted);
+  }
+
+  .meta a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .copy {
+    display: flex;
+    flex: 1.5;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 48px;
+    min-width: 0;
+  }
+
+  .copy p {
+    max-width: 680px;
+  }
+
+  .project {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--pad-return);
+    overflow: hidden;
+    border-radius: var(--radius-return);
+    background: var(--color-ink);
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-size: var(--type-copy-compact);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-flat);
+  }
+
+  .project-track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--return-gap);
+    height: var(--leading-body);
+    overflow: hidden;
+  }
+
+  .project-tilt {
+    transform: rotate(var(--return-tilt));
+  }
+
+  .project:hover .project-track,
+  .project:focus-visible .project-track {
+    justify-content: flex-end;
+  }
+
+  .media {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    background: var(--color-white);
+  }
+
+  .next {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    padding: 0 var(--pad-hero) var(--pad-hero);
+  }
+
+  .next-label {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    border-radius: var(--radius-card);
+    background: var(--color-line);
+  }
+
+  .next-label h2 {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--type-h2-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-tight);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .next :global(.work) {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    height: auto;
+  }
+
+  @media (min-width: 810px) and (max-width: 1199.98px) {
+    .hero {
+      height: 80vh;
+    }
+  }
+
+  @media (max-width: 1199.98px) {
+    .next {
+      flex-direction: column;
+    }
+
+    .next-label {
+      min-height: 160px;
+    }
+
+    .next :global(.work) {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media (max-width: 809.98px) {
+    .hero {
+      height: 75vh;
+    }
+
+    .details {
+      flex-direction: column;
+      gap: 48px;
+      padding: 40px 16px;
+    }
+
+    .copy {
+      order: -1;
+      width: 100%;
+    }
+
+    .meta {
+      width: 100%;
+    }
+  }
+</style>

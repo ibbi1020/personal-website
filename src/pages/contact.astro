@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import Frame from "../components/Frame.astro";
+---
+
+<Base title="Contact — Ibraheem Farooq">
+  <Frame>
+    <p class="invite">If you want to work together</p>
+    <a class="email" href="mailto:ibraheemfrq@gmail.com">ibraheemfrq@gmail.com</a>
+  </Frame>
+</Base>
+
+<style>
+  .invite {
+    margin: 0;
+    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-size: var(--type-h2-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-tight);
+    font-feature-settings: var(--font-feature);
+  }
+
+  .email {
+    display: block;
+    width: max-content;
+    max-width: none;
+    color: var(--color-canvas);
+    font-family: var(--font-display);
+    font-size: min(var(--type-project-size), calc((100vw - 4rem) / 10.2));
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-title);
+    letter-spacing: var(--tracking-tight);
+    white-space: nowrap;
+    font-feature-settings: var(--font-feature);
+  }
+
+  .email:hover,
+  .email:focus-visible {
+    text-decoration: underline;
+  }
+</style>
