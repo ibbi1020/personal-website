@@ -14,6 +14,7 @@ const works = defineCollection({
       summary: z.string(),
       order: z.number(),
       featured: z.boolean().default(false),
+      draft: z.boolean().default(false),
       span: z.number().optional(),
       link: z.string().url().optional(),
       linkLabel: z.string().optional(),
