@@ -1,0 +1,24 @@
+---
+title: Notch
+client: Self
+year: "2026"
+services:
+  - Product
+  - Design
+summary: "The MacBook notch is wasted space. I founded Notch and shipped it in SwiftUI: a panel for music, dictation, files, and agent status that opens when you need it, then gets out of the way."
+video: /works/notch/header.mp4
+order: 11
+featured: true
+span: 160
+---
+
+import Clip from "../../components/work/Clip.astro";
+import files from "../../assets/works/notch/clips/files.mp4";
+import dictation from "../../assets/works/notch/clips/dictation.mp4";
+import stickies from "../../assets/works/notch/clips/stickies.mp4";
+import notifications from "../../assets/works/notch/clips/notifications.mp4";
+
+<Clip src={files} />
+<Clip src={dictation} />
+<Clip src={stickies} />
+<Clip src={notifications} />

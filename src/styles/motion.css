@@ -5,10 +5,12 @@
 
 :root {
   --ease-rise: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-linear: linear;
   --opacity-start: 0.001;
 
   --duration-rise: 1.4s;
+  --duration-line: 0.29s;
   --duration-dot: 0.1s;
 
   --delay-word-1: 0.1s;
@@ -16,8 +18,11 @@
   --delay-word-3: 0.3s;
   --delay-name: 0.4s;
   --delay-dot: 0.6s;
+  --delay-line: 0.5s;
+  --delay-line-step: 0.16s;
 
   --rise-word: 50px;
+  --rise-line: 18px;
   --rise-name: 400px;
 
   /* Small pills. Appear id plufqg. Same on desktop, tablet, and mobile. */
@@ -77,6 +82,12 @@
 
   /* Name fit-text foreignObject. */
   --name-scale: 0.95;
+
+  /* Contact email roll. Each letter's copy sits this far below, then both slide up. */
+  --roll-shift: 1.3em;
+  --roll-duration: 0.85s;
+  --roll-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --roll-stagger: 28ms;
 }
 
 @keyframes rise {

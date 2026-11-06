@@ -7,17 +7,21 @@ const works = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      client: z.string(),
+      client: z.string().optional(),
       year: z.string(),
       services: z.array(z.string()),
-      credits: z.string(),
+      credits: z.string().optional(),
       summary: z.string(),
       order: z.number(),
       featured: z.boolean().default(false),
       span: z.number().optional(),
       link: z.string().url().optional(),
       linkLabel: z.string().optional(),
-      cover: image(),
+      cover: image().optional(),
+      video: z
+        .string()
+        .regex(/^(\/|https?:\/\/).+\.(mp4|webm)$/i, "Use an MP4 or WebM path")
+        .optional(),
     }),
 });
 

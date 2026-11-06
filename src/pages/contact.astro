@@ -1,12 +1,15 @@
 ---
 import Base from "../layouts/Base.astro";
 import Frame from "../components/Frame.astro";
+import RollingText from "../components/RollingText.astro";
 ---
 
 <Base title="Contact — Ibraheem Farooq">
   <Frame>
     <p class="invite">If you want to work together</p>
-    <a class="email" href="mailto:ibraheemfrq@gmail.com">ibraheemfrq@gmail.com</a>
+    <a class="email" href="mailto:ibraheemfrq@gmail.com">
+      <RollingText text="ibraheemfrq@gmail.com" />
+    </a>
   </Frame>
 </Base>
 
@@ -30,14 +33,14 @@ import Frame from "../components/Frame.astro";
     font-family: var(--font-display);
     font-size: min(var(--type-project-size), calc((100vw - 4rem) / 10.2));
     font-weight: var(--weight-regular);
-    line-height: var(--leading-title);
+    line-height: 1;
     letter-spacing: var(--tracking-tight);
     white-space: nowrap;
     font-feature-settings: var(--font-feature);
   }
 
-  .email:hover,
   .email:focus-visible {
-    text-decoration: underline;
+    outline: 2px solid currentColor;
+    outline-offset: 8px;
   }
 </style>

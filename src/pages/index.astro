@@ -7,16 +7,25 @@ import ProjectCursor from "../components/ProjectCursor.astro";
 import portrait from "../assets/works/portrait.png";
 import { getWorks } from "../lib/works";
 
-const words = ["Product", "UI/UX", "Branding"];
 const works = (await getWorks()).filter((work) => work.data.featured);
 
-const services = [
-  "Branding Design",
-  "Landing Page Design",
-  "Mobile App Design",
-  "UI/UX Design",
-  "Website Development",
+const experience: { title: string; place: string; href?: string; note?: string }[] = [
+  { title: "Solo founder", place: "Notch", href: "/works/notch" },
+  {
+    title: "RL Environment Engineer",
+    place: "Fleet AI",
+    href: "https://www.fleetai.com",
+    note: "Backed by Sequoia and Menlo Ventures",
+  },
+  { title: "Product Manager", place: "Antematter", href: "https://antematter.io" },
+  { title: "Principal Designer", place: "Antematter", href: "https://antematter.io" },
 ];
+
+const upcoming = [
+  { name: "ChatVibe", href: "/works/chatvibe" },
+  { name: "Orator", href: "/works/orator" },
+];
+const line = "A product engineer with taste.".split(" ");
 ---
 
 <Base>
@@ -24,24 +33,23 @@ const services = [
     <section class="hero">
       <div class="hero-frame">
         <Nav />
-        <div class="ticker">
-          {
-            words.map((word, index) => (
-              <>
-                <h1 class="rise-word" style={`--delay: var(--delay-word-${index + 1})`}>
-                  {word}
-                </h1>
-                {index < words.length - 1 && <span class="dot fade-dot">•</span>}
-              </>
-            ))
-          }
+        <div class="hero-parallax">
+          <div class="ticker">
+            <h1>
+              {
+                line.map((word, index) => (
+                  <span class="rise-word" style={`--word: ${index}`}>{word}</span>
+                ))
+              }
+            </h1>
+          </div>
+          <h1 class="name">
+            <span class="rise-name line">Ibraheem</span>
+            <span class="rise-name line">
+              <span class="accent">Farooq</span>.
+            </span>
+          </h1>
         </div>
-        <h1 class="name">
-          <span class="rise-name line">Ibraheem</span>
-          <span class="rise-name line">
-            <span class="accent">Farooq</span>.
-          </span>
-        </h1>
       </div>
     </section>
 
@@ -52,6 +60,7 @@ const services = [
             href={`/works/${work.id}`}
             title={work.data.title}
             image={work.data.cover}
+            video={work.data.video}
             span={work.data.span ?? 240}
           />
         ))}
@@ -72,30 +81,48 @@ const services = [
           <div class="block">
             <h2>About me</h2>
             <p>
-              I'm a Computer Science major based in Islamabad who transitioned from designing
-              posters and brand identities to UX and product design. My technical background
-              provides a unique perspective on bridging digital experiences that balance user
-              needs with technical viability.
+              Taste is part of the build. A product that works and feels careless is unfinished. I
+              like design engineering because the person who decides how it feels should be able to
+              make it.
             </p>
             <p>
-              I'm passionate about solving real problems through thoughtful design and clean,
-              intuitive interfaces. I believe great design emerges from understanding both user
-              behavior and the technical constraints that shape digital products.
+              I work in small teams and stay close to the user. I ship a thin version and iterate. I
+              have taken products from zero to one, and I have managed when the work needed a team.
             </p>
-          </div>
-          <div class="block">
-            <h2>Services</h2>
-            <ul class="chips">
-              {services.map((service) => <li>{service}</li>)}
-            </ul>
           </div>
           <div class="block">
             <h2>Experience</h2>
             <div class="roles">
-              <p class="role">Present: Principle Designer</p>
-              <p class="role">
-                <a href="https://antematter.io" target="_blank" rel="noopener">@Antematter</a>
-              </p>
+              {
+                experience.map((role) => (
+                  <div class="role-group">
+                    <p class="role">{role.title}</p>
+                    <p class="role">
+                      {
+                        role.href ? (
+                          <a
+                            href={role.href}
+                            target={role.href.startsWith("http") ? "_blank" : undefined}
+                            rel={role.href.startsWith("http") ? "noopener" : undefined}
+                          >
+                            @{role.place}
+                          </a>
+                        ) : (
+                          <span>@{role.place}</span>
+                        )
+                      }
+                      {role.note && <span class="role-note">({role.note})</span>}
+                    </p>
+                  </div>
+                ))
+              }
+              {
+                upcoming.map((item) => (
+                  <p class="role">
+                    <a href={item.href}>{item.name}</a>
+                  </p>
+                ))
+              }
             </div>
           </div>
         </div>
@@ -113,31 +140,55 @@ const services = [
 <style>
   .hero {
     display: flex;
+    width: 100%;
     height: 100vh;
-    padding: var(--pad-hero);
   }
 
   .hero-frame {
     display: flex;
     flex: 1;
     flex-direction: column;
-    justify-content: space-between;
     width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
     overflow: hidden;
-    border-radius: var(--radius-card);
+    border-radius: 0;
     background: var(--color-ink);
     color: var(--color-canvas);
+    animation: hero-settle var(--duration-rise) var(--ease-out) var(--delay-name) both;
+  }
+
+  .hero-parallax {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 0;
+  }
+
+  @keyframes hero-settle {
+    from {
+      margin: 0;
+      border-radius: 0;
+    }
+    to {
+      margin: var(--pad-hero);
+      border-radius: var(--radius-card);
+    }
   }
 
   .ticker {
     display: flex;
     align-items: center;
-    gap: var(--gap-ticker);
     width: 100%;
-    padding: var(--pad-ticker);
+    padding: max(12px, calc(var(--nav-top) * 100vh - var(--pad-hero) - 16px)) 24px 0;
   }
 
   .ticker h1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em;
     margin: 0;
     font-family: var(--font-display);
     font-size: var(--type-ticker-size);
@@ -147,9 +198,14 @@ const services = [
     font-feature-settings: var(--font-feature);
   }
 
-  .dot {
-    font-size: var(--type-ticker-dot-size);
-    color: var(--color-white);
+  .ticker .rise-word {
+    --rise: var(--rise-line);
+    animation-duration: var(--duration-line);
+    animation-timing-function: var(--ease-out);
+    animation-delay: calc(
+      var(--delay-name) + var(--delay-line) + var(--word, 0) *
+        var(--delay-line-step)
+    );
   }
 
   .name {
@@ -252,9 +308,7 @@ const services = [
     font-feature-settings: var(--font-feature);
   }
 
-  .about p,
-  .chip,
-  .chips li {
+  .about p {
     margin: 0;
     color: var(--color-ink);
     font-family: var(--font-display);
@@ -265,30 +319,16 @@ const services = [
     font-feature-settings: var(--font-feature);
   }
 
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    max-width: 720px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .chips li {
-    padding: 8px 16px;
-    border-radius: var(--radius-chip);
-    background: var(--color-chip-soft);
-    backdrop-filter: blur(var(--blur-chip));
-  }
-
   .roles {
     display: flex;
     flex-direction: column;
+    gap: 1.4em;
+    font-size: var(--type-lead-size);
   }
 
-  .role {
+  .about .role {
     font-size: var(--type-lead-size);
+    line-height: var(--leading-body);
     letter-spacing: var(--tracking-tight);
     font-feature-settings: var(--font-feature-body);
   }
@@ -301,6 +341,13 @@ const services = [
   .role a:focus-visible {
     color: var(--color-muted);
     text-underline-offset: 3px;
+  }
+
+  .about .role-note {
+    margin-left: 0.4em;
+    color: var(--color-muted);
+    font-size: var(--type-copy-compact);
+    letter-spacing: var(--tracking-flat);
   }
 
   .portrait {
@@ -351,4 +398,43 @@ const services = [
       bottom: 24px;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-frame {
+      animation: none;
+      margin: var(--pad-hero);
+      border-radius: var(--radius-card);
+    }
+  }
 </style>
+
+<script>
+  const hero = document.querySelector(".hero");
+  const layer = document.querySelector(".hero-parallax");
+  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const lag = 0.42;
+
+  const render = () => {
+    if (!hero || !layer) return;
+    if (motion.matches) {
+      layer.style.transform = "";
+      return;
+    }
+    const rect = hero.getBoundingClientRect();
+    const traveled = Math.min(Math.max(-rect.top, 0), rect.height);
+    layer.style.transform = `translate3d(0, ${traveled * lag}px, 0)`;
+  };
+
+  let frame = 0;
+  const onScroll = () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      render();
+    });
+  };
+
+  render();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  motion.addEventListener("change", render);
+</script>

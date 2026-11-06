@@ -1,0 +1,54 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const letters = [...text];
+---
+
+<span class="roll"><span class="read">{text}</span><span aria-hidden="true">{letters.map((letter, index) => (
+    <span class="letter" style={`--k: ${index}`}>{letter}</span>
+  ))}</span></span>
+
+<style>
+  .roll {
+    display: inline-block;
+    width: max-content;
+    margin-block: -0.06em -0.18em;
+    padding-block: 0.06em 0.18em;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: top;
+  }
+
+  .read {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .letter {
+    display: inline-block;
+    white-space: pre;
+    text-shadow: 0 var(--roll-shift) 0 currentColor;
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .letter {
+      transition: transform var(--roll-duration) var(--roll-ease);
+      transition-delay: calc(var(--k) * var(--roll-stagger));
+    }
+
+    :global(a:is(:hover, :focus-visible)) .letter,
+    :global(button:is(:hover, :focus-visible)) .letter {
+      transform: translateY(calc(var(--roll-shift) * -1));
+    }
+  }
+</style>

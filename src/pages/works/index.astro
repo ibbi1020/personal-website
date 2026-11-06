@@ -9,7 +9,7 @@ import { getWorks } from "../../lib/works";
 const works = await getWorks();
 ---
 
-<Base title="Works - Ibraheem Farooq" description="Selected product, interface, and brand work.">
+<Base title="Works - Ibraheem Farooq" description="Selected product and design work.">
   <Nav />
   <main>
     <section class="list" aria-label="Works">
@@ -19,6 +19,7 @@ const works = await getWorks();
             href={`/works/${work.id}`}
             title={work.data.title}
             image={work.data.cover}
+            video={work.data.video}
             services={work.data.services}
           />
         ))

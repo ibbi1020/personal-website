@@ -1,0 +1,110 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+}
+
+const { src, poster } = Astro.props;
+---
+
+<video
+  class="loop-video"
+  src={src}
+  poster={poster}
+  muted
+  loop
+  playsinline
+  autoplay
+  preload="metadata"
+  disablepictureinpicture
+  aria-hidden="true"
+></video>
+
+<script>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const arm = (video: HTMLVideoElement) => {
+    if (video.dataset.loopBound === "true") return;
+    video.dataset.loopBound = "true";
+
+    let rewound = false;
+
+    const rewind = () => {
+      if (rewound) return;
+      rewound = true;
+      video.currentTime = 0;
+    };
+
+    const watch = () => {
+      const duration = video.duration;
+      if (Number.isFinite(duration) && duration > 0.2) {
+        if (video.currentTime >= duration - 0.05) rewind();
+        else if (video.currentTime < 0.08) rewound = false;
+      }
+      if (video.paused || video.ended) return;
+      if ("requestVideoFrameCallback" in video) video.requestVideoFrameCallback(watch);
+    };
+
+    video.addEventListener("play", () => {
+      rewound = false;
+      if ("requestVideoFrameCallback" in video) video.requestVideoFrameCallback(watch);
+    });
+
+    video.addEventListener("timeupdate", () => {
+      if ("requestVideoFrameCallback" in video) return;
+      const duration = video.duration;
+      if (!Number.isFinite(duration) || duration < 0.2) return;
+      if (video.currentTime >= duration - 0.25) rewind();
+      else if (video.currentTime < 0.08) rewound = false;
+    });
+
+    video.addEventListener("ended", () => {
+      video.currentTime = 0;
+      if (!reduceMotion.matches && video.dataset.inView === "true") {
+        video.play().catch(() => {});
+      }
+    });
+
+    if (reduceMotion.matches) {
+      video.pause();
+      video.autoplay = false;
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const playing = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            playing.dataset.inView = "true";
+            playing.play().catch(() => {});
+          } else {
+            playing.dataset.inView = "false";
+            playing.pause();
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(video);
+  };
+
+  const scan = () => {
+    document.querySelectorAll<HTMLVideoElement>("video.loop-video").forEach(arm);
+  };
+
+  scan();
+  document.addEventListener("astro:page-load", scan);
+</script>
+
+<style>
+  .loop-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    background: var(--color-ink);
+    pointer-events: none;
+  }
+</style>
