@@ -190,8 +190,6 @@
 
 @media (max-width: 809.98px) {
   :root {
-    --type-name-size: 64px;
-    --leading-name: 0.8em;
     --type-h2-size: 32px;
     --type-h3-size: 28px;
     --type-project-size: 64px;
@@ -199,7 +197,6 @@
     --type-lead-size: 20px;
     --type-copy-size: 16px;
     --type-note-size: 24px;
-    --pad-name: 0 16px 16px;
   }
 }
 
