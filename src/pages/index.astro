@@ -22,8 +22,8 @@ const experience: { title: string; place: string; href?: string; note?: string }
 ];
 
 const upcoming = [
-  // { name: "ChatVibe", href: "/works/chatvibe" },
-  { name: "Orator", href: "/works/orator" },
+  // "ChatVibe",
+  "Orator",
 ];
 const line = "A product engineer with taste.".split(" ");
 ---
@@ -117,9 +117,10 @@ const line = "A product engineer with taste.".split(" ");
                 ))
               }
               {
-                upcoming.map((item) => (
-                  <p class="role">
-                    <a href={item.href}>{item.name}</a>
+                upcoming.map((name) => (
+                  <p class="role role-soon">
+                    {name}
+                    <span class="soon">Coming Soon</span>
                   </p>
                 ))
               }
@@ -350,6 +351,23 @@ const line = "A product engineer with taste.".split(" ");
     letter-spacing: var(--tracking-flat);
   }
 
+  .role-soon {
+    opacity: 0.4;
+  }
+
+  .about .soon {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 4px 10px;
+    border-radius: var(--radius-chip);
+    background: var(--color-chip-soft);
+    color: var(--color-ink);
+    font-size: var(--type-nav-size);
+    line-height: var(--leading-meta);
+    letter-spacing: var(--tracking-flat);
+    vertical-align: middle;
+  }
+
   .portrait {
     position: sticky;
     top: 8px;
@@ -370,6 +388,10 @@ const line = "A product engineer with taste.".split(" ");
   @media (max-width: 1199.98px) {
     .ticker {
       display: none;
+    }
+
+    .hero-parallax {
+      justify-content: flex-end;
     }
 
     .grid {
